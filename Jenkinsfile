@@ -6,7 +6,7 @@ pipeline {
   stages {
     stage('Git checkout') {
       steps {
-        git credentialsId: 'git_credentials', url: 'https://github.com/TON_UTILISATEUR/TON_REPO.git'
+        git credentialsId: 'git_credentials', url: 'https://github.com/NevaSolo/Tp2.git'
       }
     }
     stage('Build') {
