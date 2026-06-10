@@ -21,14 +21,14 @@ pipeline {
     }
     stage('Build Docker image') {
       steps {
-        sh 'docker build -t toncompte/triangle-app:1.0.0 .'
+        sh 'docker build -t neva250/nevasolo:tagname .'
       }
     }
     stage('Push Docker image') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhubpass', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
           sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-          sh 'docker push toncompte/triangle-app:1.0.0'
+          sh 'docker push neva250/nevasolo:tagname'
         }
       }
     }
