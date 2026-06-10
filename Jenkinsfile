@@ -19,19 +19,6 @@ pipeline {
         bat 'mvn test'
       }
     }
-    stage('Build Docker image') {
-      steps {
-        bat 'docker build -t neva250/nevasolo:tagname .'
-      }
-    }
-    stage('Push Docker image') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhubpass', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-          bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
-          bat 'docker push neva250/nevasolo:tagname'
-        }
-      }
-    }
   }
   post {
     failure {
