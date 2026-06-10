@@ -4,7 +4,7 @@ pipeline {
     maven 'Maven'    // Remplacez par le nom de l'outil Maven configuré dans Jenkins
   }
   environment {
-    SONAR_HOST_URL = 'http://localhost:9000'
+    SONAR_HOST_URL = 'https://sonarcloud.io'
   }
   stages {
     stage('Git checkout') {

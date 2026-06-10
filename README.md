@@ -193,6 +193,17 @@ git push → GitHub webhook → Jenkins trigger → Pipeline execution
 **Repository** : https://github.com/NevaSolo/Tp2.git  
 **Credentials** : `git_credentials` (GitHub Personal Access Token)
 
+### **Intégration SonarQube**
+
+- Un stage `SonarQube analysis` a été ajouté dans `Jenkinsfile`
+- Jenkins doit contenir une credential de type **Secret Text** nommée `sonar-token`
+- L’URL SonarQube par défaut est `http://localhost:9000`
+- Le pipeline utilise :
+  ```bash
+  mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.login=%SONAR_TOKEN% -Dsonar.projectKey=tp2-triangle-app -Dsonar.projectName=Triangle-App
+  ```
+- Si tu utilises SonarCloud, remplace `SONAR_HOST_URL` par `https://sonarcloud.io` et utilise un token SonarCloud
+
 ---
 
 ## 📊 Résultats et logs
