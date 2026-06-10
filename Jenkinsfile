@@ -22,10 +22,26 @@ pipeline {
   }
   post {
     failure {
-      emailext body: 'Ce Build $BUILD_NUMBER a échoué',
-               recipientProviders: [requestor()],
-               subject: 'Build échoué',
-               to: 'ton.email@example.com'
+      emailext body: '''Build ${BUILD_NUMBER} failed!
+      
+Project: ${PROJECT_NAME}
+Build URL: ${BUILD_URL}
+Console Output: ${BUILD_URL}console
+
+Check the logs for details.''',
+               subject: '❌ Jenkins Build ${BUILD_NUMBER} FAILED - ${PROJECT_NAME}',
+               to: '${DEFAULT_RECIPIENTS}',
+               recipientProviders: [requestor(), brokenBuildSuspects()]
+    }
+    success {
+      emailext body: '''Build ${BUILD_NUMBER} passed successfully!
+      
+Project: ${PROJECT_NAME}
+Build URL: ${BUILD_URL}
+Tests: All tests passed ✅''',
+               subject: '✅ Jenkins Build ${BUILD_NUMBER} SUCCESS - ${PROJECT_NAME}',
+               to: '${DEFAULT_RECIPIENTS}',
+               recipientProviders: [requestor()]
     }
   }
 }
