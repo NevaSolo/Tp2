@@ -3,6 +3,9 @@ pipeline {
   tools {
     maven 'Maven'    // Remplacez par le nom de l'outil Maven configuré dans Jenkins
   }
+  environment {
+    SONAR_HOST_URL = 'http://localhost:9000'
+  }
   stages {
     stage('Git checkout') {
       steps {
@@ -17,6 +20,13 @@ pipeline {
     stage('Unit Test Execution') {
       steps {
         bat 'mvn test'
+      }
+    }
+    stage('SonarQube analysis') {
+      steps {
+        withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+          bat 'mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.login=%SONAR_TOKEN% -Dsonar.projectKey=tp2-triangle-app -Dsonar.projectName=Triangle-App'
+        }
       }
     }
   }
