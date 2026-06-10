@@ -5,6 +5,7 @@ pipeline {
   }
   environment {
     SONAR_HOST_URL = 'https://sonarcloud.io'
+    SONAR_ORGANIZATION = 'nevasolo'
   }
   stages {
     stage('Git checkout') {
@@ -25,7 +26,7 @@ pipeline {
     stage('SonarQube analysis') {
       steps {
         withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-          bat 'mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.login=%SONAR_TOKEN% -Dsonar.projectKey=tp2-triangle-app -Dsonar.projectName=Triangle-App'
+          bat 'mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.login=%SONAR_TOKEN% -Dsonar.organization=%SONAR_ORGANIZATION% -Dsonar.projectKey=tp2-triangle-app -Dsonar.projectName=Triangle-App'
         }
       }
     }
